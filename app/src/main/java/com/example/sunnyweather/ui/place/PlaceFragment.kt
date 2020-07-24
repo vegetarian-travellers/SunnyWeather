@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.sunnyweather.MainActivity
 import com.example.sunnyweather.R
 import com.example.sunnyweather.SunnyWeatherApplication
 import com.example.sunnyweather.ui.weather.WeatherActivity
@@ -38,7 +39,7 @@ class PlaceFragment : Fragment(){
         super.onActivityCreated(savedInstanceState)
         val layoutManager = LinearLayoutManager(activity)
         //val layoutManager = GridLayoutManager(SunnyWeatherApplication.context,1)
-        if(viewModel.isPlacedSaved()){
+        if(activity is MainActivity && viewModel.isPlacedSaved()){
             val place = viewModel.getSavedPlace()
             val intent = Intent(context,WeatherActivity::class.java).apply {
                 putExtra("location_lng", place.location.lng)
@@ -47,7 +48,7 @@ class PlaceFragment : Fragment(){
             }
             startActivity(intent)
             activity?.finish()
-            return 
+            return
         }
         recyclerView.layoutManager = layoutManager
         adapter = PlaceAdapter(this,viewModel.placeList)
